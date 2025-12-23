@@ -1,3 +1,4 @@
+using Bank.Core.Exceptions;
 using Bank.Domain.Validators;
 using FluentValidation;
 using System;
@@ -52,7 +53,7 @@ namespace Bank.Domain.Entities
                     _errors.Add(error.ErrorMessage);
                 }
 
-                throw new Exception("Alguns campos estão inválidos, por favor corrija-os!" + _errors[0]);
+                throw new DomainException("Alguns campos estão inválidos, por favor corrija-os!", _errors);
             }
 
             return true;

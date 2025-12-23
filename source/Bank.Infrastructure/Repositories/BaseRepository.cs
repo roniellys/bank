@@ -1,0 +1,58 @@
+using Bank.Infrastructure.Context;
+using Bank.Infrastructure.Interfaces;
+using Bank.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace Bank.Infrastructure.Repositories
+{
+    public class BaseRepository<T> : IBaseRepository<T> where T : Base
+    {
+        private readonly BankContext _context;
+
+        public BaseRepository(BankContext context)
+        {
+            _context = context;
+        }
+
+        public virtual async Task<T> Create(T obj)
+        {
+            _context.Add(obj);
+            await _context.SaveChangesAsync();
+
+            return obj;
+        }  
+
+        public virtual async Task<T> Update(T obj)
+        {
+            _context.Entry(obj).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return obj;
+        }
+
+        public virtual async Task Remove(long id)
+        {
+            var obj = await Get(id);
+
+            if(obj != null)
+            {
+                _context.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public virtual async Task<T> Get(long id)
+        {
+            var obj = await _context.Set<T>().AsNoTracking()
+                                            .Where(x=>x.Id == id)
+                                            .ToListAsync();
+            
+            return obj.FirstOrDefault();
+        }
+
+        public virtual async Task<List<T>> Get()
+        {
+            return await _context.Set<T>().AsNoTracking().ToListAsync();
+        }
+    }
+}
