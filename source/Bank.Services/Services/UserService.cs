@@ -54,6 +54,13 @@ namespace Bank.Services.Services
             return _mapper.Map<UserDTO>(user);
         }
 
+        public async Task<UserDTO> GetByName(string name)
+        {
+            var user = await _userRepository.GetByName(name);
+
+            return _mapper.Map<UserDTO>(user);
+        }
+
         public async Task Remove(long id)
         {
             await _userRepository.Remove(id);

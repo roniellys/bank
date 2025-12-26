@@ -1,8 +1,40 @@
+using AutoMapper;
+using Bank.API.ViewModel;
+using Bank.Domain.Entities;
+using Bank.Infrastructure.Context;
+using Bank.Infrastructure.Interfaces;
+using Bank.Infrastructure.Repositories;
+using Bank.Services.DTO;
+using Bank.Services.interfaces;
+using Bank.Services.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+#region AutoMapper
+// var autoMapperConfig = new AutoMapper.MapperConfiguration(cfg =>
+// {
+//     cfg.CreateMap<User, UserDTO>().ReverseMap();
+//     cfg.CreateMap<CreateUserViewModel, UserDTO>().ReverseMap();
+// });
+
+// builder.Services.AddSingleton(autoMapperConfig.CreateMapper());
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<User, UserDTO>().ReverseMap();
+    cfg.CreateMap<CreateUserViewModel, UserDTO>().ReverseMap();
+});
+
+#endregion
+
+builder.Services.AddDbContext<BankContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:BANK"]), ServiceLifetime.Transient);
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
@@ -12,7 +44,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 var summaries = new[]
 {

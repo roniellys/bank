@@ -10,10 +10,10 @@ namespace Bank.Infrastructure.Context
 
         public BankContext(DbContextOptions<BankContext> options) : base(options){}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
-        {
-            optionBuilder.UseSqlServer(@"Data Source=DESKTOP-I3IRLUG;Initial Catalog=BANK;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
+        // {
+        //     optionBuilder.UseSqlServer(@"Data Source=DESKTOP-I3IRLUG;Initial Catalog=BANK;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        // }
 
         public virtual DbSet<User> Users { get; set; }
 
