@@ -16,7 +16,10 @@ namespace Bank.Infrastructure.Repositories
 
         public async Task<User> GetByEmail(string email)
         {
-            var user = await _context.Users.Where(x => x.Email.ToLower() == email.ToLower()).AsNoTracking().ToListAsync();
+            var user = await _context.Users
+                .Where(x => x.Email.ToLower() == email.ToLower())
+                .AsNoTracking()
+                .ToListAsync();
 
             return user.FirstOrDefault();
         }

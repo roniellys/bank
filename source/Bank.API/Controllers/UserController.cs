@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bank.API.Controllers
 {
     [ApiController]
-    [Route("/api/v1/users/create")]
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -22,12 +21,13 @@ namespace Bank.API.Controllers
         }
 
         [HttpPost]
+        [Route("/api/v1/users/create")]
         public async Task<IActionResult> Create([FromBody] CreateUserViewModel createUserViewModel)
         {
             try
             {
                 var userDTO = _mapper.Map<UserDTO>(createUserViewModel);
-                var userCreated = _userService.Create(userDTO);
+                var userCreated = await _userService.Create(userDTO);
 
                 return Ok(new ResultViewModel
                 {
