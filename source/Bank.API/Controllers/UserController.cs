@@ -4,6 +4,7 @@ using Bank.API.ViewModel;
 using Bank.Core.Exceptions;
 using Bank.Services.DTO;
 using Bank.Services.interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.API.Controllers
@@ -132,6 +133,7 @@ namespace Bank.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("/api/v1/users/get-all")]
         public async Task<IActionResult> Get()
         {

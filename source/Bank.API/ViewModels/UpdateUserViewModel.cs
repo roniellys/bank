@@ -5,8 +5,8 @@ namespace Bank.API.ViewModel
     public class UpdateUserViewModel
     {
         [Required(ErrorMessage = "The name cannot be empty.")]
-        [Range(1, int.MaxValue, ErrorMessage = "O id não pode ser menor que 1.")]
-        public int Id { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "O id não pode ser menor que 1.")]
+        public long Id { get; set; }
         [Required(ErrorMessage = "The name cannot be empty.")]
         [MinLength(3, ErrorMessage = "O nome deve ter no mínimo 3 caracteres.")]
         [MaxLength(80, ErrorMessage = "O nome deve ter no máximo 80 caracteres.")]
